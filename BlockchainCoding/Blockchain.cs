@@ -58,7 +58,7 @@ namespace BlockchainCoding
             CreateTransaction(new Transaction(null, minerAddress, reward));
             Block block = new Block(DateTime.Now, GetLatestBlock().Hash, PendingTransaction);
             AddBlock(block);
-            PendingTransaction = new List<Transaction>();//bloğa yazdıktan sonra bütün trasları boşalttım.
+            PendingTransaction = new List<Transaction>();
             
         }
         public bool IsValid()
