@@ -9,26 +9,27 @@ namespace BlockchainCoding
         {
             Blockchain blockchain = new Blockchain();
 
-            blockchain.AddBlock(new Block(DateTime.Now, null, "{sender:Besir,receiver:Zeyni,amount:5}"));
-            blockchain.AddBlock(new Block(DateTime.Now, null, "{sender:Rıdvan,receiver:Raddat,amount:55}"));
-            blockchain.AddBlock(new Block(DateTime.Now, null, "{sender:Raddat,receiver:Ömer,amount:15}"));
+            DateTime startTime = DateTime.Now;
 
-            Console.WriteLine(JsonConvert.SerializeObject(blockchain, Formatting.Indented));
-            Console.WriteLine($"Geçerli mi => {blockchain.IsValid() }");
+            blockchain.CreateTransaction(new Transaction("Beşir", "Esat",117));
+            blockchain.ProcessPendingTransaction("Zeyni");
 
-            Console.WriteLine("Veriyi değiştiriyoruz...");
-            blockchain.Chain[1].Data = "{sender:Ömer,receiver:Beşir,amount:39}";
-            Console.WriteLine($"Geçerli mi => {blockchain.IsValid() }");
+            blockchain.CreateTransaction(new Transaction("Esat", "Beşir", 17));
+            blockchain.CreateTransaction(new Transaction("Beşir", "Esat", 10));
+            blockchain.ProcessPendingTransaction("Rıdvan");
 
-            Console.WriteLine("Hash güncellendi...");
-            blockchain.Chain[1].Hash = blockchain.Chain[1].CalculateHash();
-            Console.WriteLine($"Geçerli mi => {blockchain.IsValid() }");
+            Console.WriteLine($"Beşir balance : {blockchain.GetBalance("Beşir")}");
+            Console.WriteLine($"Esat balance : {blockchain.GetBalance("Esat")}");
+            Console.WriteLine($"Zeyni balance : {blockchain.GetBalance("Zeyni")}");
+            Console.WriteLine($"Rıdvan balance : {blockchain.GetBalance("Zeyni")}");
 
-            Console.WriteLine("%51 ele geçirildiğinde...");
-            blockchain.Chain[2].PreviousHash = blockchain.Chain[1].Hash;
-            blockchain.Chain[2].Hash = blockchain.Chain[2].CalculateHash();
-            blockchain.Chain[3].PreviousHash = blockchain.Chain[2].Hash;
-            blockchain.Chain[3].Hash = blockchain.Chain[3].CalculateHash();
+
+            DateTime finishTime = DateTime.Now;
+
+            Console.WriteLine($"Geçen süre =  {(finishTime-startTime).ToString()}");
+
+            Console.WriteLine(JsonConvert.SerializeObject(blockchain,Formatting.Indented));
+
             Console.WriteLine($"Geçerli mi => {blockchain.IsValid() }");
 
             Console.ReadKey();
