@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BlockchainCoding
 {
     public class Transaction
     {
-        public Transaction(string sender, string receiver, int amount)
+        public string FromAddress { get; set; }
+        public string ToAddress { get; set; }
+        public int Amount { get; set; }
+        public Transaction(string fromAddress, string toAddress, int amount)
         {
-            Sender = sender;
-            Receiver = receiver;
+            FromAddress = fromAddress;
+            ToAddress = toAddress;
             Amount = amount;
         }
-        public string Sender { get; set; }
-        public string Receiver { get; set; }
-        public int Amount { get; set; }
     }
 }
